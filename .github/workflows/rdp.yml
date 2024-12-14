@@ -16,9 +16,16 @@ jobs:
         echo 'github:password123' | sudo chpasswd
         echo 'xfce4-session' > ~/.xsession
         sudo service xrdp start
-- name: Display Connection Info
-  run: |
-    IP=$(curl -s ifconfig.me)
-    echo "Public IP Address: $IP"
-    outputs:
-      ip: ${{ steps.DisplayConnectionInfo.outputs.ip }}
+
+    - name: Get Public IP Address
+      run: |
+        IP=$(curl -s ifconfig.me)
+        echo "Public IP Address: $IP"  # Display IP in logs
+        echo "IP=$IP" >> $GITHUB_ENV  # Store IP as an environment variable
+
+    - name: Display Connection Info
+      run: |
+        echo "You can connect to the RDP using the following details:"
+        echo "IP Address: $IP"
+        echo "Username: github"
+        echo "Password: password123"
