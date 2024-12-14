@@ -16,8 +16,10 @@ jobs:
         echo 'github:password123' | sudo chpasswd
         echo 'xfce4-session' > ~/.xsession
         sudo service xrdp start
-    - name: Display Connection Info
-      run: |
-        echo "::set-output name=ip::$(curl -s ifconfig.me)"
+- name: Display Connection Info
+  run: |
+    IP=$(curl -s ifconfig.me)
+    echo "Public IP Address: $IP"
+
     outputs:
       ip: ${{ steps.DisplayConnectionInfo.outputs.ip }}
