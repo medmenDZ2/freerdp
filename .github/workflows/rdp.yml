@@ -17,11 +17,15 @@ jobs:
         echo 'xfce4-session' > ~/.xsession
         sudo service xrdp start
 
+    - name: Check RDP Service Status
+      run: |
+        sudo systemctl status xrdp | tee rdp_status.txt
+
     - name: Get Public IP Address
       run: |
         IP=$(curl -s ifconfig.me)
-        echo "Public IP Address: $IP"  # Display IP in logs
-        echo "IP=$IP" >> $GITHUB_ENV  # Store IP as an environment variable
+        echo "Public IP Address: $IP"
+        echo "IP=$IP" >> $GITHUB_ENV
 
     - name: Display Connection Info
       run: |
