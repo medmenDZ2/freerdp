@@ -1,0 +1,23 @@
+name: RDP Access
+
+on:
+  workflow_dispatch:
+
+jobs:
+  rdp:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up RDP
+      run: |
+        sudo apt update
+        sudo apt install -y xrdp xfce4 xfce4-goodies
+        sudo adduser github --disabled-password
+        sudo adduser github sudo
+        echo 'github:password123' | sudo chpasswd
+        echo 'xfce4-session' > ~/.xsession
+        sudo service xrdp start
+    - name: Display Connection Info
+      run: |
+        echo "::set-output name=ip::$(curl -s ifconfig.me)"
+    outputs:
+      ip: ${{ steps.DisplayConnectionInfo.outputs.ip }}
