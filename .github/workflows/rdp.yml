@@ -20,6 +20,5 @@ jobs:
   run: |
     IP=$(curl -s ifconfig.me)
     echo "Public IP Address: $IP"
-
     outputs:
       ip: ${{ steps.DisplayConnectionInfo.outputs.ip }}
